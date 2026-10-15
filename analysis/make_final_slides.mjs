@@ -194,7 +194,7 @@ const axis = { valAxisLabelFormatCode: '#,##0', valAxisLabelFontSize: 7, catAxis
     { x: 0.4, y: 1.05, w: 9.2, colW: [1.0, 5.6, 2.6], rowH: 0.32 });
 
   label(s, 0.4, 3.1, 9.2, '한계');
-  T(s, '경로별 감소 원인은 추정  /  서버 통계는 연도 합계  /  신청 뒤(전화·수임) 데이터 없음  /  광고는 클릭까지만', { x: 0.4, y: 3.38, w: 9.2, h: 0.3, fontSize: 10.5 });
+  T(s, '경로별 감소 원인은 추정  /  경로별 방문은 연도 합계  /  신청 뒤(전화·수임) 데이터 없음  /  광고는 클릭까지만', { x: 0.4, y: 3.38, w: 9.2, h: 0.3, fontSize: 10.5 });
 
   rect(s, 0.4, 3.8, 9.2, 0.38, HI, 'E0C060');
   T(s, [{ text: '사용자 확인  ', options: { bold: true } }, { text: '변리사가 리포트를 읽고 action item을 반영하겠다고 답함' }], { x: 0.52, y: 3.8, w: 9.0, h: 0.38, fontSize: 10, valign: 'middle' });
