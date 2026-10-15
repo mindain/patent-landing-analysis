@@ -50,14 +50,23 @@ const HIDE0 = '#,##0;;;';
   s.addShape(pres.ShapeType.rect, { x: L, y: 0.75, w: W, h: 0.32, fill: { color: BOX }, line: { color: BOX, pt: 0 } });
   T(s, '총 매출  =  수임당 매출  ×  수임 전환율  ×  방문당 신청률  ×  방문수', { x: L, y: 0.75, w: W, h: 0.32, fontSize: 11.5, bold: true, align: 'center', valign: 'middle' });
 
-  ctitle(s, L, 1.2, 5.2, '신청은 2020년 308건에서 2022년 72건으로, 2년 만에 4분의 1이 됐다', '연도별 신청 건수 (알림 문자 기준, 2026년은 10월까지라 제외)');
+  const CW = 4.6;
+  ctitle(s, L, 1.18, CW, '신청은 2020년 308건에서 2022년 72건으로, 2년 만에 4분의 1이 됐다', '연도별 신청 건수 (알림 문자 기준, 2026년은 10월까지라 제외)', 10);
   const yrs = ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'];
   const v = [111, 506, 284, 308, 301, 223, 308, 163, 72, 92, 105, 87];
   const [gray, blue] = split(v, (i) => i >= 6 && i <= 8);
   s.addChart(pres.ChartType.bar, [{ name: '신청', labels: yrs, values: gray }, { name: '급감 구간', labels: yrs, values: blue }],
-    { x: L - 0.08, y: 1.7, w: 5.35, h: 3.1, barGrouping: 'stacked', chartColors: [MUTE, BLUE], barGapWidthPct: 35, showValue: true, dataLabelFontSize: 8, dataLabelColor: INK, dataLabelFormatCode: HIDE0, ...axis, valAxisHidden: true, valGridLine: { style: 'none' } });
+    { x: L - 0.08, y: 1.64, w: CW + 0.1, h: 1.45, barGrouping: 'stacked', chartColors: [MUTE, BLUE], barGapWidthPct: 35, showValue: true, dataLabelFontSize: 6.5, dataLabelColor: INK, dataLabelFormatCode: HIDE0, ...axis, catAxisLabelFontSize: 7, valAxisHidden: true, valGridLine: { style: 'none' } });
 
-  const R = 5.95, RW = 3.6;
+  // 리포트 1장: 전체 방문 (봇을 뺀 실제 방문 추정)
+  ctitle(s, L, 3.14, CW, '방문도 같은 기간에 절반: 6,648(2020) → 3,397(2022)', '봇을 뺀 실제 방문 추정, 명 · 봇 = OS가 Robot·Linux인 방문. 2016·17·19년은 OS 자료 없음', 10);
+  const vy = ['2015', '2018', '2020', '2021', '2022', '2023', '2024'];
+  const vv = [11253, 9345, 6648, 4776, 3397, 3910, 3812];
+  const [vg, vb] = split(vv, (i) => i >= 2 && i <= 4);
+  s.addChart(pres.ChartType.bar, [{ name: '방문', labels: vy, values: vg }, { name: '급감 구간', labels: vy, values: vb }],
+    { x: L - 0.08, y: 3.6, w: CW + 0.1, h: 1.22, barGrouping: 'stacked', chartColors: [MUTE, BLUE], barGapWidthPct: 35, showValue: true, dataLabelFontSize: 6.5, dataLabelColor: INK, dataLabelFormatCode: HIDE0, ...axis, catAxisLabelFontSize: 7, valAxisHidden: true, valGridLine: { style: 'none' } });
+
+  const R = 5.4, RW = 4.15;
   label(s, R, 1.2, RW, '문제');
   T(s, P([
     { t: '신청 308건(2020) → 72건(2022), 회복 안 됨', nb: true, b: true },
@@ -80,7 +89,8 @@ const HIDE0 = '#,##0;;;';
   ], 9.5), { x: R, y: 3.84, w: RW, h: 0.95 });
 
   source(s, [
-    '출처: 관리자 페이지 문자 전송내역 2014-11 ~ 2026-10-05, 2,895건 → 스팸 254건 제외 2,641건. 236건 분해는 셰이플리(떼는 순서에 따라 36~71%라 평균)',
+    '출처: 관리자 페이지 문자 전송내역 2014-11 ~ 2026-10-05, 2,895건 → 스팸 254건 제외 2,641건. 접속자통계 연도별·OS별 방문자(같은 IP는 하루 1회). 236건 분해는 셰이플리(순서에 따라 36~71%라 평균)',
+    '봇 근거: 2021-10부터 방문이 월 900 → 2,100인데 신청은 12 → 5, 급증분은 전부 경로 없는 "직접". 2025년 이후는 신뢰 낮음',
     '손실 = 연 200건 감소 × 수임 10~20% × 수수료 300만 원. 목표 = 방문 3,812(2024) 그대로 두고 신청률만 4.6%로 되돌리면 177건',
   ]);
 }
@@ -89,35 +99,18 @@ const HIDE0 = '#,##0;;;';
 {
   const s = pres.addSlide({ masterName: 'C' });
   head(s, '유입경로별 방문자수');
-  const w1 = 2.75, g = 0.3, x2 = L + w1 + g, w2 = W - w1 - g;
-
-  // 왼쪽: 리포트 1장 표 (전체 → 봇 추정 → 실제 방문)
-  ctitle(s, L, 0.72, w1, '방문은 2020→2022년에 절반', '봇을 뺀 실제 방문 추정, 명', 10.5);
-  const vy = ['2015', '2018', '2020', '2021', '2022', '2023', '2024'];
-  const vv = [11253, 9345, 6648, 4776, 3397, 3910, 3812];
-  const [vg, vb] = split(vv, (i) => i >= 2 && i <= 4);
-  s.addChart(pres.ChartType.bar, [{ name: '방문', labels: vy, values: vg }, { name: '급감 구간', labels: vy, values: vb }],
-    { x: L - 0.08, y: 1.2, w: w1 + 0.1, h: 2.15, barGrouping: 'stacked', chartColors: [MUTE, BLUE], barGapWidthPct: 35, showValue: true, dataLabelFontSize: 7, dataLabelColor: INK, dataLabelFormatCode: HIDE0, ...axis, catAxisLabelFontSize: 7, valAxisHidden: true, valGridLine: { style: 'none' } });
-  T(s, P([
-    { t: '봇 추정 = OS가 Robot·Linux인 방문을 뺌', nb: true, b: true },
-    { t: '근거: 2021-10부터 방문이 월 900 → 2,100인데 신청은 12 → 5, 급증분은 전부 경로 없는 "직접"', nb: true },
-  ], 7.5), { x: L, y: 3.36, w: w1, h: 0.4 });
-
-  vline(s, x2 - g / 2, 0.75, 3.0);
-
-  // 오른쪽: 리포트 1-1 c3 (직접 제외)
-  ctitle(s, x2, 0.72, w2, '끊긴 것은 다음·블로그·네이버 검색이다. 광고는 가장 덜 줄었다', '경로별 연간 방문 (서버 기록, "직접" 제외. 출처를 놓치는 경우가 많아 추이로만 봄)', 10.5);
+  ctitle(s, L, 0.72, W, '끊긴 것은 다음·블로그·네이버 검색이다. 광고는 가장 덜 줄었다', '경로별 연간 방문 (서버 기록, "직접" 제외. 출처를 놓치는 경우가 많아 추이로만 봄)');
   const ly = ['2016', '2018', '2020', '2021', '2022', '2024', '2026'];
-  s.addShape(pres.ShapeType.rect, { x: 5.62, y: 1.33, w: 0.98, h: 1.9, fill: { color: HI }, line: { color: HI, pt: 0 } });
-  T(s, '신청 급감 구간', { x: 5.62, y: 1.17, w: 0.98, h: 0.15, fontSize: 7, color: INK2, align: 'center' });
+  s.addShape(pres.ShapeType.rect, { x: 3.35, y: 1.33, w: 2.35, h: 1.86, fill: { color: HI }, line: { color: HI, pt: 0 } });
+  T(s, '신청 급감 구간', { x: 3.35, y: 1.17, w: 2.35, h: 0.15, fontSize: 7, color: INK2, align: 'center' });
   s.addChart(pres.ChartType.line, [
     { name: '네이버 검색', labels: ly, values: [4902, 2980, 2220, 1193, 1028, 1278, 776] },
     { name: '네이버 광고', labels: ly, values: [296, 326, 472, 368, 283, 334, 203] },
     { name: '다음', labels: ly, values: [1267, 955, 644, 273, 7, 59, 131] },
     { name: '네이버 블로그', labels: ly, values: [2555, 764, 600, 118, 43, 42, 4] },
-  ], { x: x2 - 0.1, y: 1.2, w: w2 + 0.15, h: 2.3, chartColors: [BLUE, YELLOW, AQUA, ORANGE], lineSize: 2, lineDataSymbol: 'circle', lineDataSymbolSize: 4, ...axis, valAxisLabelFormatCode: '#,##0', valAxisMaxVal: 5000, valAxisMajorUnit: 1000,
-    showLegend: true, legendPos: 'r', legendFontSize: 7.5, legendFontFace: FONT, legendColor: INK });
-  T(s, '2020 → 2022:  다음 −99% · 네이버 블로그 −93% · 네이버 검색 −54% · 네이버 광고 −40%  (신청 −77%)', { x: x2, y: 3.5, w: w2, h: 0.22, fontSize: 8.5, bold: true });
+  ], { x: L - 0.1, y: 1.2, w: W + 0.15, h: 2.3, chartColors: [BLUE, YELLOW, AQUA, ORANGE], lineSize: 2, lineDataSymbol: 'circle', lineDataSymbolSize: 4, ...axis, valAxisLabelFormatCode: '#,##0', valAxisMaxVal: 5000, valAxisMajorUnit: 1000,
+    showLegend: true, legendPos: 'r', legendFontSize: 8, legendFontFace: FONT, legendColor: INK });
+  T(s, '2020 → 2022:  다음 −99% · 네이버 블로그 −93% · 네이버 검색 −54% · 네이버 광고 −40%  (신청 −77%)', { x: L, y: 3.5, w: W, h: 0.22, fontSize: 9, bold: true });
 
   // 아래: 리포트 1-2 ~ 1-5
   const cols = [
@@ -136,7 +129,7 @@ const HIDE0 = '#,##0;;;';
   });
 
   source(s, [
-    '출처: 관리자 페이지 접속자통계 — 연도별·OS별 방문자(2015 ~ 2025, 같은 IP는 하루 1회), 유입 도메인별 방문(2016 ~ 2026-10-06). 2016·17·19년은 OS 자료 없음, 2025년 이후 신뢰 낮음',
+    '출처: 관리자 페이지 접속자통계 — 유입 도메인별 방문 2016 ~ 2026-10-06',
     '경로 비교는 "직접"(봇 대부분) 제외. 서버 광고 유입 203 vs 광고 보고서 클릭 388(같은 90일)이라 경로는 추이로만 봄. 감소율은 2020 → 2022',
   ]);
 }
