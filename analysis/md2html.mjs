@@ -9,6 +9,7 @@ const inline = (s) => esc(s.replaceAll(String.fromCharCode(92) + '~', '~'))
   .replace(/`([^`]+)`/g, '<code>$1</code>')
   .replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>')
   .replace(/\*\(([^*]+)\)\*/g, '<i>($1)</i>')
+  .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2">$1</a>')
   .replace(/=&gt;/g, '⇒').replace(/-&gt;/g, '→');
 const slug = (s) => s.replace(/[^\w가-힣]+/g, '-').replace(/^-|-$/g, '');
 

@@ -61,7 +61,7 @@ const axis = { valAxisLabelFormatCode: '#,##0', valAxisLabelFontSize: 7, catAxis
   ], { x: 5.22, y: 1.5, w: 4.25, h: 0.4, valign: 'middle' });
   T(s, P([
     '방문: 다음·블로그·검색이 줄고, 광고는 원인 아님',
-    '광고: 포괄 검색어 9개가 광고비 26%, 클릭률은 1/8',
+    '광고: 포괄 검색어 8개가 광고비 26%, 클릭률은 1/8',
     '신청률 4.6% → 2.1%, 수임 기록 없음, 분쟁 건당 7배',
   ], 10), { x: 5.22, y: 1.92, w: 4.25, h: 0.95 });
 
@@ -116,16 +116,16 @@ const axis = { valAxisLabelFormatCode: '#,##0', valAxisLabelFontSize: 7, catAxis
 {
   const s = pres.addSlide({ masterName: 'C' });
   head(s, '방문자수 — 네이버 광고');
-  T(s, "포괄 검색어 9개('특허'·'변리사' 등 한 단어)가 차지하는 몫", { x: 0.45, y: 0.75, w: 4.85, h: 0.22, fontSize: 9, align: 'center' });
+  T(s, "포괄 검색어 8개('특허'·'변리사' 등 한 단어)가 차지하는 몫", { x: 0.45, y: 0.75, w: 4.85, h: 0.22, fontSize: 9, align: 'center' });
   s.addChart(pres.ChartType.bar, [
-    { name: '포괄 검색어 9개', labels: ['노출', '클릭', '광고비'], values: [68.3, 20.2, 26.3] },
-    { name: '구체적 검색어 9,374개', labels: ['노출', '클릭', '광고비'], values: [31.7, 79.8, 73.7] },
+    { name: '포괄 검색어 8개', labels: ['노출', '클릭', '광고비'], values: [68.3, 20.2, 26.3] },
+    { name: '구체적 검색어 9,375개', labels: ['노출', '클릭', '광고비'], values: [31.7, 79.8, 73.7] },
   ], { x: 0.35, y: 0.98, w: 5.0, h: 3.5, barDir: 'bar', barGrouping: 'percentStacked', chartColors: [RED, GRAY], barGapWidthPct: 50, ...axis, valAxisHidden: true, valGridLine: { style: 'none' }, catAxisOrientation: 'maxMin',
     catAxisLabelFontSize: 9, showValue: true, dataLabelFontSize: 9, dataLabelColor: INK, dataLabelFormatCode: '0"%"',
     showLegend: true, legendPos: 'b', legendFontSize: 8, legendFontFace: FONT });
 
   T(s, P([
-    { t: '포괄 검색어 9개', b: true, nb: true, sz: 10.5 },
+    { t: '포괄 검색어 8개', b: true, nb: true, sz: 10.5 },
     { t: '광고비 26%, 클릭률 0.06% vs 구체적 검색어 0.50% (피셔 정확검정, 우연일 확률 0.1% 미만)', nb: true },
     { t: '확장검색 (네이버가 비슷한 말에 붙인 광고)', b: true, nb: true, sz: 10.5 },
     { t: '직접 등록한 말 0.61% vs 확장 0.32%, 2배 차이 (같은 검정, 포괄 검색어 제외)', nb: true },
@@ -158,7 +158,7 @@ const axis = { valAxisLabelFormatCode: '#,##0', valAxisLabelFontSize: 7, catAxis
   };
   col(cols[0], '방문당 신청률', (x) => s.addChart(pres.ChartType.line, [{ name: '방문당 신청률(%)', labels: ['2015', '2018', '2020', '2021', '2022', '2023', '2024', '2025*', '2026*'], values: [4.5, 3.2, 4.6, 3.4, 2.1, 2.4, 2.8, 1.0, 0.9] }],
     { x: x + 0.05, y: y0 + 0.35, w: cw - 0.1, h: 1.8, chartColors: [RED], lineSize: 2, lineDataSymbol: 'circle', lineDataSymbolSize: 5, showValue: true, dataLabelFontSize: 7, dataLabelPosition: 't', dataLabelFormatCode: '0.0', ...axis, catAxisLabelFontSize: 6.5, valAxisHidden: true, valAxisMinVal: 0, valGridLine: { style: 'none' } }),
-    ['4.6%(2020) → 2.1%(2022)', '왜 줄었는지는 당시 기록이 없어 모름'], '새 사이트');
+    ['4.6%(2020) → 2.1%(2022)', '당시 이유는 기록이 없어 모름', '지금: 광고 방문 중앙값 18초, 27%가 5초 안에 나감'], '새 사이트');
   col(cols[1], '수임 전환율', (x) => s.addChart(pres.ChartType.bar, [{ name: '신청 형태', labels: ['번호만', '출원 상세', '분쟁 상세'], values: [1730, 386, 25] }],
     { x: x + 0.05, y: y0 + 0.35, w: cw - 0.1, h: 1.8, chartColors: [BLUE], barGapWidthPct: 50, showValue: true, dataLabelFontSize: 8, dataLabelFormatCode: '#,##0', ...axis, valAxisHidden: true, valGridLine: { style: 'none' } }),
     ['기록 없음(기억으로 10건 중 1~2건)', '신청의 81%가 번호만 남김'], '신청마다 수임 여부 기록');
@@ -172,7 +172,7 @@ const axis = { valAxisLabelFormatCode: '#,##0', valAxisLabelFontSize: 7, catAxis
     ['분쟁은 건수는 적지만 건당 수임료가 7배'], '분쟁 전용 페이지');
 
   source(s, [
-    '출처: 신청 알림 문자, 신청 게시판 2,141건(스팸·잘못된 번호 33건 제외), 서버 방문(슬라이드 2), 수수료는 사무소 수가',
+    '출처: 신청 알림 문자, 신청 게시판 2,141건(스팸·잘못된 번호 33건 제외), 서버 방문(슬라이드 2), GA4 광고 유입 120세션(2026-09), 수수료는 사무소 수가',
     '*2025·26은 방문 추정 신뢰 낮음',
   ], 4.75, 0.45);
 }
@@ -183,22 +183,22 @@ const axis = { valAxisLabelFormatCode: '#,##0', valAxisLabelFontSize: 7, catAxis
   head(s, '해야 할 것과 한계');
   label(s, 0.4, 0.75, 9.2, '누가 무엇을 하면 무엇이 움직이나');
   const rows = [
-    ['누가', '무엇을', '움직이는 지표'],
-    ['나(개발)', '새 사이트(글자·첫 화면 신청 칸·분쟁 페이지) 완성, 변리사 확인 후 공개', '방문당 신청률, 네이버 검색 방문'],
-    ['변리사', '포괄 검색어 입찰 낮추기, 엉뚱한 검색어 막기', '광고 클릭률, 광고비'],
-    ['변리사', '네이버 광고 신청 추적 켜기', '검색어별 신청'],
-    ['변리사', '신청마다 수임 여부 기록', '수임 전환율'],
-    ['변리사', '다음 광고 재개 결정, 블로그는 읽을거리 있는 글로', '다음·블로그 방문'],
+    ['근거', '누가', '무엇을', '움직이는 지표'],
+    ['2·4장', '나(개발)', '새 사이트(글자·첫 화면 신청 칸·분쟁 페이지) 완성, 변리사 확인 후 공개', '방문당 신청률, 네이버 검색 방문'],
+    ['3장', '변리사', '포괄 검색어 입찰 낮추기, 엉뚱한 검색어 막기', '광고 클릭률, 광고비'],
+    ['3장', '변리사', '네이버 광고 신청 추적 켜기', '검색어별 신청'],
+    ['4장', '변리사', '신청마다 수임 여부 기록', '수임 전환율'],
+    ['2장', '변리사', '다음 광고 재개 결정, 블로그는 읽을거리 있는 글로', '다음·블로그 방문'],
   ];
   s.addTable(rows.map((r, i) => r.map((c) => ({ text: c, options: { fontFace: FONT, fontSize: 10, color: INK, bold: i === 0, fill: { color: i === 0 ? SOFT : BG }, valign: 'middle', margin: [3, 6, 3, 6], border: { type: 'solid', pt: 0.5, color: LINE } } }))),
-    { x: 0.4, y: 1.05, w: 9.2, colW: [1.0, 5.6, 2.6], rowH: 0.32 });
+    { x: 0.4, y: 1.05, w: 9.2, colW: [0.7, 0.9, 5.1, 2.5], rowH: 0.32 });
 
   label(s, 0.4, 3.1, 9.2, '한계');
   T(s, '경로별 감소 원인은 추정  /  경로별 방문은 연도 합계  /  신청 뒤(전화·수임) 데이터 없음  /  광고는 클릭까지만', { x: 0.4, y: 3.38, w: 9.2, h: 0.3, fontSize: 10.5 });
 
   rect(s, 0.4, 3.8, 9.2, 0.38, HI, 'E0C060');
   T(s, [{ text: '사용자 확인  ', options: { bold: true } }, { text: '변리사가 리포트를 읽고 action item을 반영하겠다고 답함' }], { x: 0.52, y: 3.8, w: 9.0, h: 0.38, fontSize: 10, valign: 'middle' });
-  T(s, [{ text: 'AI 사용  ', options: { bold: true } }, { text: '코드·차트·초안은 Claude Code, 문제 정의·구조·검증은 사람. 자세한 내용은 제출 폼' }], { x: 0.4, y: 4.3, w: 9.2, h: 0.32, fontSize: 10, valign: 'middle' });
+  T(s, [{ text: 'AI 사용  ', options: { bold: true } }, { text: '코드·차트·초안은 Claude Code, 문제 정의·구조·검증은 사람. 자세한 내용은 GitHub README' }], { x: 0.4, y: 4.3, w: 9.2, h: 0.32, fontSize: 10, valign: 'middle' });
 }
 
 pres.writeFile({ fileName: 'portfolio/final-slides.pptx' }).then((f) => console.log('wrote', f));
