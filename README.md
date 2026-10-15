@@ -36,12 +36,34 @@
 - 사용자 확인: 특허사무소 변리사가 리포트를 읽고 action item을 반영하겠다고 답했다.
 
 ## 5. 한계
-경로별 감소 원인은 추정이다. 서버 통계는 연도 합계뿐이다. 신청 뒤(전화·수임) 데이터가 없다. 광고는 클릭까지만 본다.
+경로별 감소 원인은 추정이다. 서버 통계는 연도 합계뿐이다. 신청 뒤(전화·수임) 데이터가 없다. 광고는 클릭까지만 본다. 수임률·수수료는 기록이 아닌 변리사 기억에 의한 대략의 값이다.
 
-## 6. 폴더 구조
-- index.html: 리포트
-- charts/: 리포트 차트
-- slides.pptx: 발표 슬라이드 5장
+## 6. 실행법과 폴더 구조
+
+```
+analysis/
+  stats.mjs              검정(피셔·이항·포아송·z) → analysis/data/stats_table.md
+  charts.mjs             리포트 차트 → portfolio/charts/*.svg
+  md2html.mjs            리포트 md → html
+  make_final_slides.mjs  발표 슬라이드 5장 → portfolio/final-slides.pptx
+portfolio/
+  report.md              리포트 원문
+  charts/                리포트 차트
+index.html, charts/      공개 페이지(GitHub Pages)
+slides.pptx              발표 슬라이드
+```
+
+Node.js 18 이상에서 저장소 루트에서 실행한다.
+
+```
+npm install
+npm run stats     # 검정 결과표
+npm run charts    # 차트
+npm run report    # 리포트 html
+npm run slides    # 슬라이드
+```
+
+원자료(신청 문자·게시판, 서버 통계, 광고 보고서)는 사무소 내부 자료라 올리지 않았다. 스크립트에는 원자료에서 집계한 값이 들어 있어 원자료 없이도 같은 결과가 나온다.
 
 ## 7. AI 사용 공개
 도구: Claude Code. 데이터 정리 스크립트, 통계 계산, 차트, 리포트·슬라이드 초안에 썼다.

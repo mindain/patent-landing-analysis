@@ -1,0 +1,14 @@
+{
+  "name": "patent-landing-analysis",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "stats": "node analysis/stats.mjs",
+    "charts": "node analysis/charts.mjs",
+    "report": "node analysis/md2html.mjs portfolio/report.md",
+    "slides": "node analysis/make_final_slides.mjs"
+  },
+  "dependencies": {
+    "pptxgenjs": "4.0.1"
+  }
+}
