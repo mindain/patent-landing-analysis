@@ -3,6 +3,7 @@
 한 줄 요약: 특허사무소 무료진단 신청이 2020년 308건에서 2022년 72건으로 줄었다. 줄어든 원인을 방문과 신청률로 나눠 찾고, 리뉴얼 사이트와 광고 조정을 내놓았다.
 
 공개 URL: https://mindain.github.io/patent-landing-analysis/
+발표 슬라이드(브라우저에서 바로 넘기기): https://mindain.github.io/patent-landing-analysis/slides.html
 
 ## 1. 문제 정의
 - 대상과 문제: 특허를 알아보는 개인·중소기업이 쓰는 무료진단 사이트의 신청이 2020년 308건에서 2022년 72건으로 줄고 회복되지 않았다.
@@ -86,6 +87,7 @@ portfolio/
   charts/                리포트 차트
 index.html, charts/      공개 페이지(GitHub Pages). portfolio/report.md를 html로 바꾼 것
 slides.pptx, slides.pdf  발표 슬라이드 5장
+slides.html, slides/     브라우저 발표용(클릭·방향키로 넘김, F 전체 화면)
 ```
 
 Node.js 18 이상에서 저장소 루트에서 실행한다.
