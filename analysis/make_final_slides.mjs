@@ -7,7 +7,7 @@ const pptxgen = require('pptxgenjs');
 
 const pres = new pptxgen();
 pres.layout = 'LAYOUT_16x9'; // 10 x 5.625 in
-pres.title = '특허사무소 무료진단 랜딩페이지 리뉴얼 — 데이터 분석';
+pres.title = '특허사무소 무료진단 신청 회복 — 랜딩 사이트·네이버 광고 개선';
 
 // 색은 리포트 차트와 같게
 const INK = '0B0B0B', INK2 = '52514E', MUTE = 'B8B6B0', GRID = 'E6E5E1', BG = 'FFFFFF', BOX = 'EEF4FB', HI = 'FFF3C4', LINE = 'DFE3E2';
@@ -44,7 +44,7 @@ const split = (vals, pick) => [vals.map((v, i) => (pick(i) ? 0 : v)), vals.map((
 // ===== 1. 문제 · 결과 · 해결책
 {
   const s = pres.addSlide({ masterName: 'C' });
-  head(s, '무료진단 랜딩페이지 리뉴얼 — 데이터 분석');
+  head(s, '특허사무소 무료진단 신청 회복 — 랜딩 사이트·네이버 광고 개선');
   s.addShape(pres.ShapeType.rect, { x: L, y: 0.75, w: W, h: 0.32, fill: { color: BOX }, line: { color: BOX, pt: 0 } });
   T(s, '총 매출  =  수임당 매출  ×  수임 전환율  ×  방문당 신청률  ×  방문수', { x: L, y: 0.75, w: W, h: 0.32, fontSize: 11.5, bold: true, align: 'center', valign: 'middle' });
 
@@ -74,7 +74,7 @@ const split = (vals, pick) => [vals.map((v, i) => (pick(i) ? 0 : v)), vals.map((
   ], 9.5), { x: R, y: 2.72, w: RW, h: 0.85 });
   label(s, R, 3.6, RW, '해결책', BLUE);
   T(s, P([
-    '새 사이트: 글자로, 첫 화면에 신청 칸, 분쟁 페이지',
+    '랜딩 사이트: 글자로, 첫 화면에 신청 칸, 분쟁 페이지',
     '광고: 포괄 검색어 입찰 낮추기, 제외 키워드',
     '기록: 신청마다 수임 여부, 광고 신청 추적',
   ], 9.5), { x: R, y: 3.84, w: RW, h: 0.95 });
