@@ -49,8 +49,8 @@ analysis/
 portfolio/
   report.md              리포트 원문
   charts/                리포트 차트
-index.html, charts/      공개 페이지(GitHub Pages)
-slides.pptx              발표 슬라이드
+index.html, charts/      공개 페이지(GitHub Pages). portfolio/report.md를 html로 바꾼 것
+slides.pptx, slides.pdf  발표 슬라이드 5장
 ```
 
 Node.js 18 이상에서 저장소 루트에서 실행한다.
