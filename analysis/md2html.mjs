@@ -5,7 +5,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 const src = process.argv[2] || 'portfolio/report.md';
 const md = readFileSync(src, 'utf8').replace(/\r\n/g, '\n');
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-const inline = (s) => esc(s)
+const inline = (s) => esc(s.replaceAll(String.fromCharCode(92) + '~', '~'))
   .replace(/`([^`]+)`/g, '<code>$1</code>')
   .replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>')
   .replace(/\*\(([^*]+)\)\*/g, '<i>($1)</i>')
