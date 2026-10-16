@@ -60,12 +60,12 @@ const HIDE0 = '#,##0;;;';
 
   // 리포트 1장: 전체 방문 (봇을 뺀 실제 방문 추정)
   T(s, '방문자수는 2015년(11,253)부터 꾸준히 감소, 2022년부터 3,000명대 횡보. 신청 급감 구간에 6,648 → 3,397 절반', { x: L, y: 2.88, w: CW, h: 0.4, fontSize: 9, bold: true });
-  T(s, '실제 방문 추정 = 전체 − 봇 추정(OS "Robot"·"Linux" 방문). 접속자통계 연도별·OS별 방문자, 같은 IP는 하루 1회', { x: L, y: 3.28, w: CW, h: 0.3, fontSize: 7, color: INK2 });
-  const vy = ['2015', '2018', '2020', '2021', '2022', '2023', '2024'];
-  const vv = [11253, 9345, 6648, 4776, 3397, 3910, 3812];
-  const [vg, vb] = split(vv, (i) => i >= 2 && i <= 4);
-  s.addChart(pres.ChartType.bar, [{ name: '방문', labels: vy, values: vg }, { name: '급감 구간', labels: vy, values: vb }],
-    { x: L - 0.08, y: 3.56, w: CW + 0.1, h: 1.26, barGrouping: 'stacked', chartColors: [MUTE, BLUE], barGapWidthPct: 35, showValue: true, dataLabelFontSize: 6.5, dataLabelColor: INK, dataLabelFormatCode: HIDE0, ...axis, catAxisLabelFontSize: 7, valAxisHidden: true, valGridLine: { style: 'none' } });
+  T(s, '실제 방문 추정 = 전체 − 봇 추정(OS "Robot"·"Linux" 방문). 접속자통계 연도별·OS별 방문자, 같은 IP는 하루 1회. *2025·26은 신뢰 낮음(연한 색), 2026은 10-06까지', { x: L, y: 3.28, w: CW, h: 0.3, fontSize: 7, color: INK2 });
+  const vy = ['2015', '2018', '2020', '2021', '2022', '2023', '2024', '2025*', '2026*'];
+  const vv = [11253, 9345, 6648, 4776, 3397, 3910, 3812, 8887, 8799];
+  const vg = vv.map((v, i) => (i >= 2 && i <= 4 ? 0 : i >= 7 ? 0 : v)), vb = vv.map((v, i) => (i >= 2 && i <= 4 ? v : 0)), vl = vv.map((v, i) => (i >= 7 ? v : 0));
+  s.addChart(pres.ChartType.bar, [{ name: '방문', labels: vy, values: vg }, { name: '급감 구간', labels: vy, values: vb }, { name: '신뢰 낮음', labels: vy, values: vl }],
+    { x: L - 0.08, y: 3.56, w: CW + 0.1, h: 1.26, barGrouping: 'stacked', chartColors: [MUTE, BLUE, 'E3E8EA'], barGapWidthPct: 35, showValue: true, dataLabelFontSize: 6.5, dataLabelColor: INK, dataLabelFormatCode: HIDE0, ...axis, catAxisLabelFontSize: 7, valAxisHidden: true, valGridLine: { style: 'none' } });
 
   const R = 5.4, RW = 4.15;
   label(s, R, 1.2, RW, '문제');
