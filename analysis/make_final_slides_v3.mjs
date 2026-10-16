@@ -111,12 +111,13 @@ const AX = { ...axis, catAxisLabelFontSize: 9, valAxisLabelFontSize: 9 };
 // 4. 방문수
 {
   const s = page('1. 방문자수', '방문은 2015년부터 꾸준히 감소, 신청 급감 구간에 절반');
-  T(s, '봇을 뺀 실제 방문 추정, 명', { x: L, y: 1.08, w: 5.4, h: 0.26, fontSize: 10, color: INK2 });
   const vy = ['2015', '2018', '2020', '2021', '2022', '2023', '2024', '2025*', '2026*'];
   const vv = [11253, 9345, 6648, 4776, 3397, 3910, 3812, 8887, 8799];
+  const bot = [5269, 5076, 3702, 11931, 22391, 21942, 6640, 11564, 6402];
   const vg = vv.map((x, i) => (i >= 2 && i <= 4 ? 0 : i >= 7 ? 0 : x)), vb = vv.map((x, i) => (i >= 2 && i <= 4 ? x : 0)), vl = vv.map((x, i) => (i >= 7 ? x : 0));
-  s.addChart(pres.ChartType.bar, [{ name: '방문', labels: vy, values: vg }, { name: '급감', labels: vy, values: vb }, { name: '신뢰 낮음', labels: vy, values: vl }],
-    { x: L - 0.08, y: 1.36, w: 5.5, h: 3.4, barGrouping: 'stacked', chartColors: [MUTE, BLUE, 'E3E8EA'], barGapWidthPct: 35, showValue: true, dataLabelFontSize: 9, dataLabelColor: INK, dataLabelFormatCode: HIDE0, ...AX, valAxisHidden: true, valGridLine: { style: 'none' } });
+  s.addChart(pres.ChartType.bar, [{ name: '실제 방문', labels: vy, values: vg }, { name: '급감 구간', labels: vy, values: vb }, { name: '실제 방문(신뢰 낮음)', labels: vy, values: vl }, { name: '봇 추정', labels: vy, values: bot }],
+    { x: L - 0.08, y: 1.1, w: 5.5, h: 3.66, barGrouping: 'stacked', chartColors: [MUTE, BLUE, 'D5DBDE', 'F0F2F3'], barGapWidthPct: 35, showValue: true, dataLabelFontSize: 8, dataLabelColor: INK, dataLabelFormatCode: HIDE0, ...AX, valAxisHidden: true, valGridLine: { style: 'none' },
+      showLegend: true, legendPos: 'b', legendFontSize: 8.5, legendFontFace: FONT, legendColor: INK });
   const R = 6.1, RW = W - 5.65;
   T(s, '전처리', { x: R, y: 1.1, w: RW, h: 0.26, fontSize: 11, bold: true, color: BLUE });
   T(s, P([
@@ -131,7 +132,6 @@ const AX = { ...axis, catAxisLabelFontSize: 9, valAxisLabelFontSize: 9 };
 // 5. 유입경로별
 {
   const s = page('1-1. 유입경로별 방문자수', '끊긴 것은 다음·블로그·네이버 검색. 광고는 가장 덜 줄었다');
-  T(s, '경로별 연간 방문 (서버 기록, "직접" 제외. 출처를 놓치는 경우가 많아 추이로만 봄)', { x: L, y: 1.08, w: W, h: 0.26, fontSize: 10, color: INK2 });
   const ly = ['2016', '2018', '2020', '2021', '2022', '2024', '2026'];
   s.addShape(pres.ShapeType.rect, { x: 3.5, y: 1.5, w: 2.3, h: 2.35, fill: { color: HI }, line: { color: HI, pt: 0 } });
   T(s, '신청 급감 구간', { x: 3.5, y: 1.36, w: 2.3, h: 0.16, fontSize: 8, color: INK2, align: 'center' });
@@ -143,28 +143,10 @@ const AX = { ...axis, catAxisLabelFontSize: 9, valAxisLabelFontSize: 9 };
   ], { x: L - 0.1, y: 1.36, w: W + 0.15, h: 2.65, chartColors: [BLUE, YELLOW, AQUA, ORANGE], lineSize: 2.25, lineDataSymbol: 'circle', lineDataSymbolSize: 5, ...AX, valAxisLabelFormatCode: '#,##0', valAxisMaxVal: 5000, valAxisMajorUnit: 1000,
     showLegend: true, legendPos: 'r', legendFontSize: 9, legendFontFace: FONT, legendColor: INK });
   T(s, '2020 → 2022:   네이버 광고 −40%  ·  네이버 검색 −54%  ·  네이버 블로그 −93%  ·  다음 −99%  ·  신청 −77%', { x: L, y: 4.1, w: W, h: 0.3, fontSize: 12, bold: true });
-  source(s, ['출처: 관리자 페이지 접속자통계, 유입 도메인별 방문 2016 ~ 2026-10-06 · 전처리: "직접"(봇 대부분) 제외. 감소율은 2020 → 2022']);
-}
-
-// 6. GA4
-{
-  const s = page('1-1. 유입경로별 방문자수 — GA4', 'GA4로 다시 본 28일: 세션 215');
-  T(s, '2026-09-18 ~ 10-15, 세션 기본 채널 그룹', { x: L, y: 1.08, w: W, h: 0.26, fontSize: 10, color: INK2 });
-  const ga = [['Organic Search', 94, '네이버·구글 검색'], ['Direct', 78, '직접'], ['Paid Search', 32, '네이버 광고'], ['Organic Social', 5, '블로그 등'], ['Referral', 5, '다른 사이트 링크']];
-  const gw = (W - 0.8) / 5;
-  ga.forEach(([k, n, sub], i) => {
-    const x = L + i * (gw + 0.2);
-    box(s, x, 1.45, gw, 1.5, SOFT);
-    T(s, String(n), { x, y: 1.55, w: gw, h: 0.7, fontSize: 30, bold: true, color: i === 2 ? BLUE : INK, align: 'center', valign: 'middle' });
-    T(s, k, { x, y: 2.25, w: gw, h: 0.3, fontSize: 11, bold: true, align: 'center' });
-    T(s, sub, { x, y: 2.55, w: gw, h: 0.3, fontSize: 9.5, color: INK2, align: 'center' });
-  });
-  T(s, '한계', { x: L, y: 3.15, w: W, h: 0.26, fontSize: 11, bold: true, color: ORANGE });
-  body(s, [
-    '옛 사이트가 http라 네이버(https)에서 올 때 출처(리퍼러 쪽지)가 빠져 "직접"으로 잘못 분류됨',
-    '10-06 전엔 광고 링크에 UTM이 없어 광고가 Organic Search로 들어감 (10-06 수정)',
-  ], 3.45, 0.9, 11.5);
-  source(s, ['출처: GA4 트래픽 획득 보고서 2026-09-18 ~ 10-15']);
+  source(s, [
+    '출처: 관리자 페이지 접속자통계, 유입 도메인별 방문 2016 ~ 2026-10-06 · 전처리: "직접"(봇 대부분) 제외. 감소율은 2020 → 2022',
+    '옛 사이트가 http라 네이버(https)에서 올 때 출처(리퍼러 쪽지)가 빠져 "직접"으로 잘못 분류됨. 10-06 전엔 광고 링크에 UTM이 없어 광고가 Organic Search로 들어감',
+  ]);
 }
 
 // 7. 다음
