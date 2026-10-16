@@ -59,7 +59,7 @@ const action = (s, text, y = 4.28) => {
 const stat = (s, x, y, w, k, big, sub, color = INK) => {
   box(s, x, y, w, 1.2, SOFT);
   T(s, k, { x: x + 0.15, y: y + 0.1, w: w - 0.3, h: 0.24, fontSize: 10, color: INK2, bold: true, valign: 'middle' });
-  T(s, big, { x: x + 0.15, y: y + 0.36, w: w - 0.3, h: 0.46, fontSize: 20, bold: true, color, valign: 'middle' });
+  T(s, big, { x: x + 0.15, y: y + 0.36, w: w - 0.3, h: 0.46, fontSize: 18, bold: true, color, valign: 'middle' });
   T(s, sub, { x: x + 0.15, y: y + 0.84, w: w - 0.3, h: 0.3, fontSize: 9, color: INK2 });
 };
 const body = (s, lines, y, h = 1.0, size = 12) => T(s, P(lines.map((t) => (typeof t === 'string' ? { t, nb: true } : t)), size), { x: L, y, w: W, h });
@@ -78,7 +78,6 @@ const AX = { ...axis, catAxisLabelFontSize: 9, valAxisLabelFontSize: 9 };
 // 2. 매출 식
 {
   const s = page('지표', '총 매출 = 방문수 × 방문당 신청률 × 수임 전환율 × 수임당 매출');
-  T(s, '네 칸 중 어디가 무너졌는지 찾는다. 칸마다 데이터가 왜 어려운가', { x: L, y: 1.1, w: W, h: 0.3, fontSize: 12, color: INK2 });
   const mh = [
     ['방문수', '서버 통계에 봇이 섞이고 유입 경로를 놓침', 'OS로 봇 추정, 경로는 추이로만'],
     ['방문당 신청률', '신청은 정확(알림 문자)', '분모인 방문이 추정'],
@@ -89,9 +88,7 @@ const AX = { ...axis, catAxisLabelFontSize: 9, valAxisLabelFontSize: 9 };
   mh.forEach(([h, a, b], i) => {
     const x = L + i * (mw + 0.2);
     box(s, x, 1.55, mw, 2.4, SOFT);
-    T(s, h, { x: x + 0.15, y: 1.7, w: mw - 0.3, h: 0.35, fontSize: 14, bold: true, valign: 'middle' });
-    T(s, a, { x: x + 0.15, y: 2.15, w: mw - 0.3, h: 0.7, fontSize: 11 });
-    T(s, b, { x: x + 0.15, y: 2.95, w: mw - 0.3, h: 0.7, fontSize: 11, color: INK2 });
+    T(s, h, { x: x + 0.15, y: 1.55, w: mw - 0.3, h: 2.4, fontSize: 16, bold: true, align: 'center', valign: 'middle' });
     if (i < 3) T(s, '→', { x: x + mw, y: 1.55, w: 0.2, h: 2.4, fontSize: 14, color: INK2, align: 'center', valign: 'middle' });
   });
 }
@@ -99,16 +96,15 @@ const AX = { ...axis, catAxisLabelFontSize: 9, valAxisLabelFontSize: 9 };
 // 3. 신청 추이
 {
   const s = page('문제', '신청은 2년 만에 4분의 1이 됐다: 308건(2020) → 72건(2022)');
-  T(s, '연도별 신청 건수 (알림 문자 기준, 2026년은 10월까지라 제외)', { x: L, y: 1.08, w: 5.4, h: 0.26, fontSize: 10, color: INK2 });
   const yrs = ['2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'];
   const v = [111, 506, 284, 308, 301, 223, 308, 163, 72, 92, 105, 87];
   const [gray, blue] = split(v, (i) => i >= 6 && i <= 8);
   s.addChart(pres.ChartType.bar, [{ name: '신청', labels: yrs, values: gray }, { name: '급감 구간', labels: yrs, values: blue }],
     { x: L - 0.08, y: 1.36, w: 5.5, h: 3.4, barGrouping: 'stacked', chartColors: [MUTE, BLUE], barGapWidthPct: 35, showValue: true, dataLabelFontSize: 9, dataLabelColor: INK, dataLabelFormatCode: HIDE0, ...AX, valAxisHidden: true, valGridLine: { style: 'none' } });
   const R = 6.1, RW = W - 5.65;
-  stat(s, R, 1.1, RW, '핵심 기간', '308건 → 72건', '2020 → 2022, 회복 안 됨', ORANGE);
-  stat(s, R, 2.4, RW, '비즈니스 임팩트', '연 6,000만~1.2억 원 손실', '연 200건 감소 × 수임 10~20% × 수수료 300만 원');
-  stat(s, R, 3.7, RW, '성공 기준', '연 150건', '방문 3,812(2024) 그대로, 신청률만 4.6%로 되돌리면 177건', BLUE);
+  stat(s, R, 1.1, RW, '핵심 기간', '308건 → 72건', '', ORANGE);
+  stat(s, R, 2.4, RW, '비즈니스 임팩트', '연 6,000만~1.2억 원', '연 200건 감소 × 수임 10~20% × 수수료 300만 원');
+  stat(s, R, 3.7, RW, '성공 기준', '연 150건', '', BLUE);
   source(s, ['출처: 관리자 페이지 문자 전송내역 2014-11 ~ 2026-10-05 · 전처리: 2,895건 → 스팸 254건 제외 2,641건. 수임률·수수료는 변리사 답']);
 }
 
