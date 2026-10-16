@@ -184,21 +184,24 @@ const HIDE0 = '#,##0;;;';
     { text: '0.06%', options: { fontSize: 22, bold: true, color: ORANGE } }, { text: '  vs  ', options: { fontSize: 10, color: INK2 } }, { text: '0.50%', options: { fontSize: 22, bold: true, color: BLUE } },
   ], { x: R, y: 1.6, w: RW, h: 0.42, valign: 'middle' });
   T(s, P([
-    { t: '포괄 검색어가 노출 68%, 광고비 26%를 쓰고 클릭은 20%. 클릭당 비용은 같음(2,547원 대 2,434원)', nb: true },
-    { t: '피셔 정확검정, 우연일 확률 0.1% 미만', nb: true, c: INK2, sz: 8 },
+    { t: '포괄 검색어가 노출 68%, 광고비 26%를 쓰고 클릭은 20%. 클릭당 비용은 같음(2,547원 대 2,434원). 피셔, 우연일 확률 0.1% 미만', nb: true },
     { t: '확장 검색은 직접 등록한 키워드의 절반만 눌림(0.32% 대 0.61%)', nb: true },
-    { t: '작년 정리로 광고비 −45%에 신청은 18 → 15(−17%). 광고비대로 줄지 않았다는 경향(포아송 8%)', nb: true },
-  ], 8.5), { x: R, y: 2.04, w: RW, h: 1.3 });
+  ], 8), { x: R, y: 2.02, w: RW, h: 0.62 });
 
-  s.addShape(pres.ShapeType.rect, { x: R, y: 3.4, w: RW, h: 1.42, fill: { color: BOX }, line: { color: BOX, pt: 0 } });
+  // 1-6 작년 정리 전후 (90일): 2025 vs 2026
+  ctitle(s, R, 2.66, RW, '작년 정리로 광고비 −45%에 신청은 −17%', '작년 정리 전후, 같은 90일. 2025년을 100으로. 18→15는 우연일 확률 73%(이항), 광고비대로 줄었다면 15건 이상일 확률 8%(포아송)', 9.5);
+  const pc = ['광고비 134만→73만 원', '클릭 671→388', '클릭당 1,993→1,891원', '신청 18→15'];
+  s.addChart(pres.ChartType.bar, [
+    { name: '2025', labels: pc, values: [100, 100, 100, 100] },
+    { name: '2026', labels: pc, values: [55, 58, 95, 83] },
+  ], { x: R - 0.05, y: 3.1, w: RW + 0.1, h: 1.02, barGrouping: 'clustered', chartColors: [MUTE, BLUE], barGapWidthPct: 45, ...axis, catAxisLabelFontSize: 6.5,
+    valAxisHidden: true, valGridLine: { style: 'none' }, showValue: true, dataLabelFontSize: 7, dataLabelColor: INK, dataLabelFormatCode: '0;;;', showLegend: false });
+
+  s.addShape(pres.ShapeType.rect, { x: R, y: 4.18, w: RW, h: 0.66, fill: { color: BOX }, line: { color: BOX, pt: 0 } });
   T(s, P([
-    { t: '뺌', b: true, nb: true, c: ORANGE },
-    '특허·특허법인·변리사·특허사무소 입찰 낮추거나 제외("특허출원"은 남김)',
-    '확장 검색은 성적 나쁜 그룹부터 끔, "변리사파견" 등 무관 노출 정리',
-    { t: '늘림', b: true, nb: true, c: BLUE },
-    '지방 키워드(클릭률 1.9%, 클릭당 706원, 변리사 선호)',
-    '심사관출신 그룹(클릭률 1위, 비용 2.5%)',
-  ], 8.5), { x: R + 0.12, y: 3.46, w: RW - 0.24, h: 1.32 });
+    { t: '뺌: 특허·특허법인·변리사·특허사무소 입찰 낮추거나 제외("특허출원"은 남김). 확장 검색은 성적 나쁜 그룹부터 끔, "변리사파견" 등 무관 노출 정리', nb: true },
+    { t: '늘림: 지방 키워드(클릭률 1.9%, 클릭당 706원, 변리사 선호), 심사관출신 그룹(클릭률 1위, 비용 2.5%)', nb: true },
+  ], 7.5), { x: R + 0.1, y: 4.22, w: RW - 0.2, h: 0.6 });
 
   source(s, [
     '출처: 네이버 검색광고 검색어 보고서 2026-07-06 ~ 10-03(90일, 27,277행), 비교용 2025-07-02 ~ 09-29. GA4 2026-09-02 ~ 10-01(작업자 접속 69세션 제외)',
